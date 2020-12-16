@@ -1,0 +1,481 @@
+# baseURI: http://w3.org/ns/shRIOL
+# prefix: shRIOL
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shRIOL: <http://w3.org/ns/shRIOL#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://w3.org/ns/shRIOL>
+  rdf:type owl:Ontology ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+shRIOL:Action
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:has-agent ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:has-theme ;
+    ] ;
+  owl:disjointWith shRIOL:Agent ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:Exception ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+.
+shRIOL:Agent
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:Exception ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+.
+shRIOL:AssumedAppropriateForChildren
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:AssumptionOnCommunicate ;
+.
+shRIOL:AssumedClear
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:AssumptionOnCommunicate ;
+.
+shRIOL:AssumedConcise
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:AssumptionOnCommunicate ;
+.
+shRIOL:Assumption
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Agent ;
+  owl:disjointWith shRIOL:Exception ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+.
+shRIOL:AssumptionOnCommunicate
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Assumption ;
+.
+shRIOL:Communicate
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Action ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:DataController ;
+      owl:onProperty shRIOL:has-agent ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:DataSubject ;
+      owl:onProperty shRIOL:has-receiver ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  owl:disjointWith shRIOL:GiveConsent ;
+.
+shRIOL:DataController
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Agent ;
+  owl:disjointWith shRIOL:LegalAuthority ;
+  owl:disjointWith shRIOL:MemberState ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+.
+shRIOL:DataProcessor
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Agent ;
+  owl:disjointWith shRIOL:LegalAuthority ;
+  owl:disjointWith shRIOL:MemberState ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+.
+shRIOL:DataSubject
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:NaturalPerson ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass shRIOL:HolderOfParentalResponsibility ;
+      owl:onProperty shRIOL:has-theme ;
+    ] ;
+.
+shRIOL:Exception
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Agent ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+.
+shRIOL:Germany
+  rdf:type shRIOL:MemberState ;
+  shRIOL:has-min-consent-age 16 ;
+.
+shRIOL:GiveConsent
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Action ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:DataSubject ;
+      owl:onProperty shRIOL:has-agent ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  owl:disjointWith shRIOL:Communicate ;
+.
+shRIOL:Hans
+  rdf:type shRIOL:DataSubject ;
+  shRIOL:has-age "13"^^xsd:positiveInteger ;
+  shRIOL:has-holder-of-pr shRIOL:fatherOfHans ;
+  shRIOL:has-member-state shRIOL:Germany ;
+.
+shRIOL:HolderOfParentalResponsibility
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:NaturalPerson ;
+.
+shRIOL:Italy
+  rdf:type shRIOL:MemberState ;
+  shRIOL:has-min-consent-age "14"^^xsd:positiveInteger ;
+.
+shRIOL:LegalAuthority
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Agent ;
+  owl:disjointWith shRIOL:DataController ;
+  owl:disjointWith shRIOL:DataProcessor ;
+  owl:disjointWith shRIOL:MemberState ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+.
+shRIOL:Luca
+  rdf:type shRIOL:DataSubject ;
+  shRIOL:has-age "13"^^xsd:positiveInteger ;
+  shRIOL:has-member-state shRIOL:Italy ;
+.
+shRIOL:MemberState
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Agent ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:has-min-consent-age ;
+    ] ;
+  owl:disjointWith shRIOL:DataController ;
+  owl:disjointWith shRIOL:DataProcessor ;
+  owl:disjointWith shRIOL:LegalAuthority ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+.
+shRIOL:NaturalPerson
+  rdf:type owl:Class ;
+  rdfs:subClassOf shRIOL:Agent ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:has-age ;
+    ] ;
+  owl:disjointWith shRIOL:DataController ;
+  owl:disjointWith shRIOL:DataProcessor ;
+  owl:disjointWith shRIOL:LegalAuthority ;
+  owl:disjointWith shRIOL:MemberState ;
+.
+shRIOL:Pedro
+  rdf:type shRIOL:DataSubject ;
+  shRIOL:has-age "13"^^xsd:positiveInteger ;
+  shRIOL:has-member-state shRIOL:Spain ;
+.
+shRIOL:PersonalData
+  rdf:type owl:Class ;
+  rdfs:comment "Individuals of this class refer to CLUSTERS of personal data (name, two emails, one phone number, etc.) belonging to the same DataSubject. The ontology should be expanded to allow specifying atomic personal data (each of which could have a different category, a different storage time, etc., or even a different purpose). These details are not relevant for this work so we skip." ;
+  rdfs:subClassOf owl:Thing ;
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:DataController ;
+  owl:disjointWith shRIOL:DataProcessor ;
+  owl:disjointWith shRIOL:Exception ;
+  owl:disjointWith shRIOL:MemberState ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+  owl:disjointWith owl:NamedIndividual ;
+.
+shRIOL:PersonalDataProcessing
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:is-lawful ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty shRIOL:is-transparent ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:DataController ;
+      owl:onProperty shRIOL:has-data-controller ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:DataProcessor ;
+      owl:onProperty shRIOL:has-data-processor ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass shRIOL:PersonalData ;
+      owl:onProperty shRIOL:has-personal-data ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Agent ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:Exception ;
+.
+shRIOL:Spain
+  rdf:type shRIOL:MemberState ;
+  shRIOL:has-min-consent-age 13 ;
+.
+shRIOL:c1Hans
+  rdf:type shRIOL:AssumedClear ;
+  rdf:type shRIOL:Communicate ;
+  shRIOL:has-agent shRIOL:contrHans ;
+  shRIOL:has-receiver shRIOL:Hans ;
+  shRIOL:has-theme shRIOL:pdpHans ;
+.
+shRIOL:c1Luca
+  rdf:type shRIOL:AssumedClear ;
+  rdf:type shRIOL:Communicate ;
+  shRIOL:has-agent shRIOL:contrLuca ;
+  shRIOL:has-receiver shRIOL:Luca ;
+  shRIOL:has-theme shRIOL:pdpLuca ;
+.
+shRIOL:c1Pedro
+  rdf:type shRIOL:AssumedClear ;
+  rdf:type shRIOL:Communicate ;
+  shRIOL:has-agent shRIOL:contrPedro ;
+  shRIOL:has-receiver shRIOL:Pedro ;
+  shRIOL:has-theme shRIOL:pdpPedro ;
+.
+shRIOL:c2Hans
+  rdf:type shRIOL:AssumedClear ;
+  rdf:type shRIOL:Communicate ;
+  shRIOL:has-agent shRIOL:contrHans ;
+  shRIOL:has-receiver shRIOL:Hans ;
+  shRIOL:has-theme shRIOL:pdpHans ;
+  shRIOL:is-rejected-by shRIOL:courtA ;
+  shRIOL:is-supported-by shRIOL:courtB ;
+.
+shRIOL:contrHans
+  rdf:type shRIOL:DataController ;
+.
+shRIOL:contrLuca
+  rdf:type shRIOL:DataController ;
+.
+shRIOL:contrPedro
+  rdf:type shRIOL:DataController ;
+.
+shRIOL:courtA
+  rdf:type shRIOL:LegalAuthority ;
+  shRIOL:reject shRIOL:c2Hans ;
+  shRIOL:support shRIOL:c1Luca ;
+.
+shRIOL:courtB
+  rdf:type shRIOL:LegalAuthority ;
+  shRIOL:support shRIOL:c2Hans ;
+.
+shRIOL:describes
+  rdf:type owl:FunctionalProperty ;
+.
+shRIOL:exceptionAgeDS
+  rdf:type owl:Class ;
+  rdfs:comment "The age of the data subject is below the minimal age for consent in his/her Member State. See Art.8(1) of the GDPR." ;
+  rdfs:subClassOf shRIOL:Exception ;
+.
+shRIOL:fatherOfHans
+  rdf:type shRIOL:HolderOfParentalResponsibility ;
+.
+shRIOL:gcFatherOfHans
+  rdf:type shRIOL:GiveConsent ;
+  shRIOL:has-agent shRIOL:fatherOfHans ;
+  shRIOL:has-theme shRIOL:pdpHans ;
+.
+shRIOL:gcHans
+  rdf:type shRIOL:GiveConsent ;
+  shRIOL:has-agent shRIOL:Hans ;
+  shRIOL:has-theme shRIOL:pdpHans ;
+.
+shRIOL:gcLuca
+  rdf:type shRIOL:GiveConsent ;
+  shRIOL:has-agent shRIOL:Luca ;
+  shRIOL:has-theme shRIOL:pdpLuca ;
+.
+shRIOL:gcPedro
+  rdf:type shRIOL:GiveConsent ;
+  shRIOL:has-agent shRIOL:Pedro ;
+  shRIOL:has-theme shRIOL:pdpPedro ;
+.
+shRIOL:has-age
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain shRIOL:NaturalPerson ;
+  rdfs:range xsd:positiveInteger ;
+.
+shRIOL:has-agent
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:Action ;
+.
+shRIOL:has-data-controller
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:PersonalDataProcessing ;
+  rdfs:range shRIOL:DataController ;
+.
+shRIOL:has-data-processor
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:PersonalDataProcessing ;
+  rdfs:range shRIOL:DataProcessor ;
+.
+shRIOL:has-holder-of-pr
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:DataSubject ;
+  rdfs:range shRIOL:HolderOfParentalResponsibility ;
+.
+shRIOL:has-member-state
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          shRIOL:DataProcessor
+          shRIOL:DataController
+          shRIOL:DataSubject
+        ) ;
+    ] ;
+  rdfs:range shRIOL:MemberState ;
+.
+shRIOL:has-min-consent-age
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain shRIOL:MemberState ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:oneOf (
+          13
+          14
+          15
+          16
+        ) ;
+    ] ;
+.
+shRIOL:has-personal-data
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:PersonalDataProcessing ;
+  rdfs:range shRIOL:PersonalData ;
+.
+shRIOL:has-receiver
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain shRIOL:Communicate ;
+.
+shRIOL:has-theme
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:Action ;
+  owl:inverseOf shRIOL:is-theme-of ;
+.
+shRIOL:is-lawful
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain shRIOL:PersonalDataProcessing ;
+  rdfs:range xsd:boolean ;
+.
+shRIOL:is-personal-data-of
+  rdf:type owl:FunctionalProperty ;
+  rdfs:domain shRIOL:PersonalData ;
+  rdfs:range shRIOL:DataSubject ;
+.
+shRIOL:is-rejected-by
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain shRIOL:Assumption ;
+  rdfs:range shRIOL:LegalAuthority ;
+  owl:inverseOf shRIOL:reject ;
+.
+shRIOL:is-supported-by
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain shRIOL:Assumption ;
+  rdfs:range shRIOL:LegalAuthority ;
+  owl:inverseOf shRIOL:support ;
+.
+shRIOL:is-theme-of
+  rdf:type owl:InverseFunctionalProperty ;
+  rdfs:range shRIOL:Action ;
+  owl:inverseOf shRIOL:has-theme ;
+.
+shRIOL:is-transparent
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain shRIOL:PersonalDataProcessing ;
+  rdfs:range xsd:boolean ;
+.
+shRIOL:pdHans
+  rdf:type shRIOL:PersonalData ;
+  shRIOL:is-personal-data-of shRIOL:Hans ;
+.
+shRIOL:pdLuca
+  rdf:type shRIOL:PersonalData ;
+  shRIOL:is-personal-data-of shRIOL:Luca ;
+.
+shRIOL:pdPedro
+  rdf:type shRIOL:PersonalData ;
+  shRIOL:is-personal-data-of shRIOL:Pedro ;
+.
+shRIOL:pdpHans
+  rdf:type shRIOL:PersonalDataProcessing ;
+  shRIOL:has-data-controller shRIOL:contrHans ;
+  shRIOL:has-data-processor shRIOL:procHans ;
+  shRIOL:has-personal-data shRIOL:pdHans ;
+  shRIOL:is-theme-of shRIOL:c1Hans ;
+  shRIOL:is-theme-of shRIOL:c2Hans ;
+.
+shRIOL:pdpLuca
+  rdf:type shRIOL:PersonalDataProcessing ;
+  shRIOL:has-data-controller shRIOL:contrLuca ;
+  shRIOL:has-data-processor shRIOL:procLuca ;
+  shRIOL:has-personal-data shRIOL:pdLuca ;
+.
+shRIOL:pdpPedro
+  rdf:type shRIOL:PersonalDataProcessing ;
+  shRIOL:has-data-controller shRIOL:contrPedro ;
+  shRIOL:has-data-processor shRIOL:procPedro ;
+  shRIOL:has-personal-data shRIOL:pdPedro ;
+  shRIOL:is-theme-of shRIOL:c1Pedro ;
+.
+shRIOL:procHans
+  rdf:type shRIOL:DataProcessor ;
+.
+shRIOL:procLuca
+  rdf:type shRIOL:DataProcessor ;
+.
+shRIOL:procPedro
+  rdf:type shRIOL:DataProcessor ;
+.
+shRIOL:reject
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain shRIOL:LegalAuthority ;
+  rdfs:range shRIOL:Assumption ;
+  owl:inverseOf shRIOL:is-rejected-by ;
+.
+shRIOL:support
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain shRIOL:LegalAuthority ;
+  rdfs:range shRIOL:Assumption ;
+  owl:inverseOf shRIOL:is-supported-by ;
+.
+owl:NamedIndividual
+  owl:disjointWith shRIOL:Action ;
+  owl:disjointWith shRIOL:Assumption ;
+  owl:disjointWith shRIOL:DataController ;
+  owl:disjointWith shRIOL:DataProcessor ;
+  owl:disjointWith shRIOL:Exception ;
+  owl:disjointWith shRIOL:MemberState ;
+  owl:disjointWith shRIOL:NaturalPerson ;
+  owl:disjointWith shRIOL:PersonalData ;
+  owl:disjointWith shRIOL:PersonalDataProcessing ;
+.

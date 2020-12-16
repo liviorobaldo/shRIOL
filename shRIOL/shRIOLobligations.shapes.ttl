@@ -1,0 +1,38 @@
+# baseURI: http://w3.org/ns/shRIOLobligations
+# imports: http://datashapes.org/dash
+# imports: http://w3.org/ns/shRIOL
+# prefix: shRIOLobligations
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shRIOL: <http://w3.org/ns/shRIOL#> .
+@prefix shRIOLobligations: <http://w3.org/ns/shRIOLobligations#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://w3.org/ns/shRIOLobligations>
+  rdf:type owl:Ontology ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:imports <http://w3.org/ns/shRIOL> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+shRIOL:CheckLawfulness
+  rdf:type sh:NodeShape ;
+  sh:property [
+      sh:path shRIOL:is-lawful ;
+      sh:hasValue "true"^^xsd:boolean ;
+      sh:message "The personal data processing is not lawful, as required by Art.5(1)(a) and defined by Art.6 of the GDPR." ;
+    ] ;
+  sh:targetClass shRIOL:PersonalDataProcessing ;
+.
+shRIOL:CheckTransparency
+  rdf:type sh:NodeShape ;
+  sh:targetClass shRIOL:PersonalDataProcessing ;
+  sh:property [ 
+    sh:path shRIOL:is-transparent ;
+    sh:hasValue "true"^^xsd:boolean ;
+    sh:message "The personal data processing is not transparent, as required/defined by Article 12 of the GDPR" ;
+  ] ;
+.
