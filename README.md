@@ -1,9 +1,6 @@
 # shRIOL
 <!-- This repository contains the OWL and SHACL files commented in the paper "Compliance checking in reified I/O logic via SHACL" submitted to ICAIL 2021. -->
 
-More general than classes and instances, SHACL introduces the notion of shapes
-that can formally describe constraints on the structure of RDF nodes and edges. The RDF graphs that satisfy the constraints denoted by the SHACL shapes <i>are said to be valid with respect to those shapes</i>.
-
 The subfolder shRIOL contains Java files to execute the SHACL files on the OWL ontology.
 
 To compile the Java files: "javac -cp ./src/;./lib/* -d ./class ./src/DetectViolations.java"<br>
