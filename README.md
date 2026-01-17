@@ -1,10 +1,10 @@
 # shRIOL
 
-This is a test.
+This is a test. Not, it's not
 
-And this is the second line.
+And this is the second line, or a third one?
 
-And this is the third line.
+And this is the third line. NO! This is the third one.
 
 <!-- This repository contains the OWL and SHACL files commented in the paper "Compliance checking in reified I/O logic via SHACL" submitted to ICAIL 2021. -->
 
